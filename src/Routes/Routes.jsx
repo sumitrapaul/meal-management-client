@@ -8,6 +8,8 @@ import Profile from "../pages/Dashboard/Profile/Profile";
 import PrivateRoute from "./PrivateRoute";
 import RequestedMeal from "../pages/Dashboard/RequestedMeal/RequestedMeal";
 import Reviews from "../pages/Dashboard/Reviews/Reviews";
+import AllMeals from "../pages/Dashboard/AllMeals/AllMeals";
+import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +45,15 @@ export const router = createBrowserRouter([
         {
           path:'reviews',
           element:<Reviews></Reviews>
+        },
+        /**addmin route */
+        {
+          path:'users',
+          element:<ManageUsers></ManageUsers>
+        },
+        {
+          path:'allMeals',
+          element:<AllMeals></AllMeals>
         },
       ]
     }
