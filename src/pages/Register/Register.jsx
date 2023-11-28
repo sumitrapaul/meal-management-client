@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+// import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Register = () => {
@@ -17,7 +17,7 @@ const Register = () => {
 
   const { createUser, handleProfile } = useContext(AuthContext);
   const navigate = useNavigate();
-  const axiosPublic = useAxiosPublic()
+  // const axiosPublic = useAxiosPublic()
 
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((res) => {
@@ -26,13 +26,13 @@ const Register = () => {
 
       handleProfile(data.name, data.photoURL)
         .then(() => {
-          const userInfo = {
-            name: data.name,
-            email: data.email 
-          }
-          axiosPublic.post('/users', userInfo)
-         .then(res =>{
-          if(res.data.insertedId){
+          // const userInfo = {
+          //   name: data.name,
+          //   email: data.email 
+          // }
+          // axiosPublic.post('/users', userInfo)
+        //  .then(res =>{
+        //   if(res.data.insertedId){
             reset();
           Swal.fire({
             position: "top-end",
@@ -42,8 +42,8 @@ const Register = () => {
             timer: 1500,
           });
           navigate("/");
-          }
-         })
+        //   }
+        //  })
         })
         .catch((error) => {
           console.log(error);

@@ -20,14 +20,14 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     try {
       const { email, password } = data;
       console.log(email, password);
 
-      const res = await signIn(email, password);
-      const user = res.user;
-      console.log(user);
+      signIn(email, password);
+      // const user = res.user;
+      // console.log(user);
       reset();
       Swal.fire({
         title: "User login successfully!!",

@@ -12,9 +12,9 @@ const Banner = () => {
       <div className="form-control">
       <div className="input-group flex justify-center">
       <input type="text" placeholder="category" className="input input-bordered md:w-[400px]" />
-          <button className="btn btn-square">
-          <IoSearch className="text-2xl"></IoSearch>
-         </button>
+          
+          <IoSearch className="text-2xl -ml-8 mt-3 text-black"></IoSearch>
+         
       </div>
          
      </div>

@@ -1,19 +1,21 @@
 import { NavLink, Outlet } from "react-router-dom";
+// import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true;
-
+  // const [isAdmin] = useAdmin();
+  // console.log(isAdmin)
   return (
     <div className="flex gap-6">
+     
       <div className="w-64 min-h-screen bg-red-200">
         <ul className="menu space-y-4">
-          {isAdmin ? (
+          {/* {isAdmin ? ( */}
             <>
                 <li>
                 <NavLink to="/dashboard/adminProfile">Admin Profile</NavLink>
               </li>
                 <li>
-                <NavLink to="/dashboard/users">Manage Users</NavLink>
+                 <NavLink to="/dashboard/users">Manage Users</NavLink>
               </li>
                 <li>
                 <NavLink to="/dashboard/addMeal">Add meal</NavLink>
@@ -31,7 +33,7 @@ const Dashboard = () => {
                 <NavLink to="/dashboard/upcomingMeals">Upcoming meals</NavLink>
               </li>
             </>
-          ) : (
+          {/* ) : (
             <>
               <li>
                 <NavLink to="/dashboard/profile">My Profile</NavLink>
@@ -45,7 +47,7 @@ const Dashboard = () => {
                 <NavLink to="/dashboard/reviews">My Reviews</NavLink>
               </li>
             </>
-          )}
+          )} */}
           <div className="divider"></div>
           <li>
             <NavLink to="/">Home</NavLink>

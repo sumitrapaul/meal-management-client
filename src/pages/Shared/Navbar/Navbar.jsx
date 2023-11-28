@@ -23,7 +23,7 @@ const closeProfile = () => {
 
   const navLinks = (
     <>
-      <li className="text-lg">
+      <li>
         <Link to="/">Home</Link>
       </li>
       <li>

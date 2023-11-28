@@ -8,10 +8,10 @@ const ManageUsers = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey:['users'],
         queryFn: async () =>{
-            const res=await axiosSecure.get('/users', {
-                headers:{
-                    authorization:`Bearer ${localStorage.getItem('access-token')}`
-                }
+            const res=await axiosSecure.get('/users',{
+              headers:{
+                authorization:`Bearer ${localStorage.getItem('access-token')}`
+              }
             });
             return res.data
         }
@@ -58,6 +58,7 @@ const ManageUsers = () => {
                     user.role === 'admin' ? 'Admin' : <button onClick={() => handleMakeAdmin(user)} className="btn bg-red-200">Make Admin</button>
                 }
             </td>
+            <td>Subscribe</td>
           </tr>)
      }
       
