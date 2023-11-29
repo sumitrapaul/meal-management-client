@@ -9,10 +9,10 @@ const ManageUsers = () => {
         queryKey:['users'],
         queryFn: async () =>{
             const res=await axiosSecure.get('/users',{
-              headers:{
-                authorization:`Bearer ${localStorage.getItem('access-token')}`
+              headers: {
+                authorization : `Bearer ${localStorage.getItem('access-token')}`
               }
-            });
+            })
             return res.data
         }
     })
@@ -33,6 +33,34 @@ const ManageUsers = () => {
             }
         })
     }
+
+
+    const handleDeleteUser = user => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`/users/${user._id}`)
+          .then(res =>{
+            if(res.data.deletedCount > 0){
+              refetch()
+              Swal.fire({
+                title: "Deleted!",
+                text: "User has been deleted.",
+                icon: "success"
+              });
+            }
+          })
+         
+        }
+      });
+    }
     return (
         <div>
            <div className="overflow-x-auto">
@@ -40,11 +68,12 @@ const ManageUsers = () => {
    
     <thead>
       <tr>
-        <th>User No.</th>
+        <th>User No.{users.length}</th>
         <th>User Name</th>
         <th>User Email</th>
         <th>Make Admin</th>
         <th>Subscription Status</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -59,6 +88,7 @@ const ManageUsers = () => {
                 }
             </td>
             <td>Subscribe</td>
+            <td><button onClick={() => handleDeleteUser(user)} className="btn bg-red-200">Delete</button></td>
           </tr>)
      }
       

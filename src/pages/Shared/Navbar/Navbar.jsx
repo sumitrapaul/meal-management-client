@@ -9,7 +9,9 @@ const Navbar = () => {
   const [showProfileDropDown, setShowProfileDropDown] = useState(false)
   const handleLogout = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        
+      })
       .catch((error) => console.log(error));
   };
 
@@ -24,13 +26,13 @@ const closeProfile = () => {
   const navLinks = (
     <>
       <li>
-        <Link to="/">Home</Link>
+        <Link className="text-xl" to="/">Home</Link>
       </li>
       <li>
-        <Link to="/meals">Meals</Link>
+        <Link className="text-xl" to="/meals">Meals</Link>
       </li>
       <li>
-        <Link to="/">
+        <Link className="text-xl" to="/">
           <div className="flex">
             Upcoming
             <IoMdNotificationsOutline className="text-2xl"></IoMdNotificationsOutline>
@@ -83,7 +85,7 @@ const closeProfile = () => {
             src="https://i.ibb.co/KqGxXJG/image.png"
             alt=""
           />
-          <h3 className="text-3xl text-white -ml-4 font-bold">MealMate</h3>
+          <h3 className="text-4xl text-white -ml-4 font-bold">MealMate</h3>
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">

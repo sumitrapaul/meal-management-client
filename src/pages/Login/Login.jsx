@@ -24,30 +24,43 @@ const Login = () => {
     try {
       const { email, password } = data;
       console.log(email, password);
-
-      signIn(email, password);
+      console.log(data.email)
+      signIn(email, password)
+      .then(result => {
+        console.log(result)
+        reset();
+        fetch(`http://localhost:5000/login/${data.email}`)
+        .then(res => res.json())
+        .then((result1) =>{
+          console.log(result1)
+          if(result1?. role){
+            localStorage.setItem('abc', result1?. role)
+          }
+          Swal.fire({
+            title: "User login successfully!!",
+            showClass: {
+              popup: `
+                            animate__animated
+                            animate__fadeInUp
+                            animate__faster
+                          `,
+            },
+            hideClass: {
+              popup: `
+                            animate__animated
+                            animate__fadeOutDown
+                            animate__faster
+                          `,
+            },
+          });
+    
+          navigate(from, { replace: true });
+        })
+      })
       // const user = res.user;
       // console.log(user);
-      reset();
-      Swal.fire({
-        title: "User login successfully!!",
-        showClass: {
-          popup: `
-                        animate__animated
-                        animate__fadeInUp
-                        animate__faster
-                      `,
-        },
-        hideClass: {
-          popup: `
-                        animate__animated
-                        animate__fadeOutDown
-                        animate__faster
-                      `,
-        },
-      });
 
-      navigate(from, { replace: true });
+    
     } catch (error) {
       console.log(error);
       Swal.fire({
