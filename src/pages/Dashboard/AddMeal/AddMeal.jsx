@@ -7,68 +7,79 @@ import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
-const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddMeal = () => {
   const { user, loading } = useContext(AuthContext);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const { email, displayName } = user || "";
   const navigate = useNavigate();
-  const axiosPublic = useAxiosPublic()
-  const onSubmit = async(data) => {
+  const axiosPublic = useAxiosPublic();
+
+
+  const onSubmit = async (data,action) => {
+ 
     data.useremail = email;
     data.userName = displayName;
-    const imageFile = { image : data.image[0]}
+    const imageFile = { image: data.image[0] };
     const res = await axiosPublic.post(image_hosting_api, imageFile, {
       headers: {
-            "content-type" : "multipart/form-data",
-          }
-    })
-    if(res.data.success){
-      const mealItem ={
-        title : data.title,
-        category : data.category,
+        "content-type": "multipart/form-data",
+      },
+    });
+    if (res.data.success) {
+      const mealItem = {
+        title: data.title,
+        category: data.category,
         ingredients: data.ingredients,
-        price : parseFloat(data.price),
-        description : data.description,
-        rating : data.rating,
-        image : res.data.data.display_url,
-        name : data.name,
-        email : data.email
-      }
-      const mealRes =await fetch("http://localhost:5000/addMeal", {
-      method: "POST",
-        headers: {
-          "content-type" : "application/json",
-        },
-        body: JSON.stringify(mealItem)
-   })
-     .then(res => res.json())
-     .then((result) => {
-      if(result.insertedId){
-          Swal.fire({
-        position: "top-end",
-          icon: "success",
-            title: "Meal added successfully!!",
-           showConfirmButton: false,
-            timer: 1500,
-        });
-   }
-         
-     navigate('/')
-     
-    })
-  }
-}
+        price: parseFloat(data.price),
+        description: data.description,
+        rating: data.rating,
+        image: res.data.data.display_url,
+        name: data.name,
+        email: data.email,
+      };
 
+      const apiUrl =
+        action === "addToUpcoming"
+          ? "http://localhost:5000/addToUpcoming"
+          : "http://localhost:5000/addMeal";
+      const mealRes = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(mealItem),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.insertedId) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Meal added successfully!!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+
+          navigate("/");
+        });
+    }
+  };
 
   return (
     <div className="mt-6">
       <Helmet>
         <title>Hostel Management | Add Meal</title>
       </Helmet>
-      <h2 className="text-4xl pt-8 font-bold text-center mb-8 underline">Add Meal</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+      <h2 className="text-4xl pt-8 font-bold text-center mb-8 underline">
+        Add Meal
+      </h2>
+      <form
+        onSubmit={handleSubmit((data) => onSubmit(data,data.action))}
+        className="flex flex-col gap-3"
+      >
         <label
           htmlFor=""
           className="text-md font-semibold text-gray-800 px-1 -mb-3"
@@ -92,9 +103,9 @@ const AddMeal = () => {
           {...register("category", { required: true })}
           className="text-input bg-gray-300 px-5 py-2 rounded"
         >
-            <option value="Breakfast">Breakfast</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Dinner">Dinner</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
         </select>
         <label
           htmlFor=""
@@ -103,7 +114,11 @@ const AddMeal = () => {
           Meal Image
         </label>
         <div className="w-full">
-        <input {...register("image", { required: true })} type="file" className="file-input w-full max-w-xs" />
+          <input
+            {...register("image", { required: true })}
+            type="file"
+            className="file-input w-full max-w-xs"
+          />
         </div>
         <label
           htmlFor=""
@@ -167,7 +182,7 @@ const AddMeal = () => {
           type="text"
           defaultValue={displayName}
           {...register("name", { required: true })}
-           readOnly
+          readOnly
           className="bg-gray-300 px-5 py-2 rounded"
         />
         <label
@@ -180,11 +195,25 @@ const AddMeal = () => {
           type="text"
           defaultValue={email}
           {...register("email", { required: true })}
-           readOnly
+          readOnly
           className="bg-gray-300 px-5 py-2 rounded"
         />
-        <input type="submit" value="Add Meal" className="btn btn-block text-white bg-gray-700"/>
-        <input type="submit" value="Add To Upcoming" className="btn btn-block text-white bg-gray-700"/>
+        <input
+          type="submit"
+          value="Add meal"
+          onClick={() =>
+            setValue("action","addMeal")
+          }
+          className="btn btn-block text-white bg-gray-700"
+        />
+        <input
+          type="submit"
+          value="Add to upcoming"
+          onClick={() =>
+            setValue("action", "addToUpcoming")
+          }
+          className="btn btn-block text-white bg-gray-700"
+        />
       </form>
     </div>
   );

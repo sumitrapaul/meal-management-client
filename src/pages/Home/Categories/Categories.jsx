@@ -16,7 +16,8 @@ const Categories = () => {
   const dinner = meal.filter((item) => item.category === "Dinner");
 
   return (
-    <div>
+    <div className="mt-12">
+      <h3 className="text-4xl text-center font-bold mb-12">Meals<span className="text-red-700"> by category</span></h3>
       <Tabs>
         <TabList className="mt-12">
           <Tab>All Meals</Tab>

@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import useMeals from "../../../hooks/useMeals";
+import { Helmet } from "react-helmet-async";
 
 
 const MealDetails = () => {
@@ -18,6 +19,7 @@ const MealDetails = () => {
      const { image, name, description, ingredients, rating, likes, reviews, date} = selectedMeal
     return (
         <div>
+          <Helmet><title>Hostel Management | Meal Details</title></Helmet>
             <div className="mt-12">
          <div className="card card-compact w-full max-w-7xl mx-auto bg-red-100 shadow-xl">
       <figure><img className="w-full lg:max-w-7xl h-[400px] lg:h-[500px] rounded" src={image} alt="Shoes" /></figure>
