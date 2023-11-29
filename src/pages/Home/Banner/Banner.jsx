@@ -13,7 +13,7 @@ const Banner = () => {
       <div className="input-group flex justify-center">
       <input type="text" placeholder="category" className="input input-bordered md:w-[400px]" />
           
-          <IoSearch className="text-2xl -ml-8 mt-3 text-black"></IoSearch>
+          <button className="btn ml-4"><IoSearch className="text-2xl text-black"></IoSearch></button>
          
       </div>
          

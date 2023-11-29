@@ -15,6 +15,7 @@ import AdminProfile from "../pages/Dashboard/AdminProfile/AdminProfile";
 import AllReviews from "../pages/Dashboard/AllReviews/AllReviews";
 import ServeMeals from "../pages/Dashboard/ServeMeals/ServeMeals";
 import Meals from "../pages/Meals/Meals";
+import MealDetails from "../pages/Home/MealDetails/MealDetails";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,11 @@ export const router = createBrowserRouter([
         {
             path:'/',
             element:<Home></Home>
+        },
+        {
+            path:'/m/:_id',
+            element:<MealDetails></MealDetails>,
+            loader:({params}) => `http://localhost:5000/mealDeatils/${params._id}`
         },
         {
           path:'/login',

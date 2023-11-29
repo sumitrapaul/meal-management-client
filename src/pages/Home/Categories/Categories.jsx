@@ -6,6 +6,7 @@ import AllCategory from "./AllCategory";
 import BreakfastCategory from "./BreakfastCategory";
 import LunchCategory from "./LunchCategory";
 import DinnerCategory from "./DinnerCategory";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const [meal] = useMeals();
@@ -52,6 +53,8 @@ const Categories = () => {
           </div>
         </TabPanel>
       </Tabs>
+
+      <div className="flex justify-center mt-12"><Link to='/meals'><button className="btn bg-red-200">See All</button></Link></div>
     </div>
   );
 };
