@@ -6,19 +6,19 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddMeal = () => {
   const { user, loading } = useContext(AuthContext);
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
   const { email, displayName } = user || "";
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-
-  const onSubmit = async (data,action) => {
- 
+  const onSubmit = async (data, action) => {
     data.useremail = email;
     data.userName = displayName;
     const imageFile = { image: data.image[0] };
@@ -40,31 +40,18 @@ const AddMeal = () => {
         email: data.email,
       };
 
-      const apiUrl =
-        action === "addToUpcoming"
-          ? "http://localhost:5000/addToUpcoming"
-          : "http://localhost:5000/addMeal";
-      const mealRes = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(mealItem),
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          if (result.insertedId) {
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Meal added successfully!!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-
-          navigate("/");
+      const apiUrl = action === "addToUpcoming" ? "/addToUpcoming" : "/addMeal";
+      const mealRes = await axiosSecure.post(apiUrl, mealItem);
+      if (mealRes.data.insertedId) {
+        reset()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${data.title} added successfully!!`,
+          showConfirmButton: false,
+          timer: 1500,
         });
+      }
     }
   };
 
@@ -77,7 +64,7 @@ const AddMeal = () => {
         Add Meal
       </h2>
       <form
-        onSubmit={handleSubmit((data) => onSubmit(data,data.action))}
+        onSubmit={handleSubmit((data) => onSubmit(data, data.action))}
         className="flex flex-col gap-3"
       >
         <label
@@ -201,17 +188,13 @@ const AddMeal = () => {
         <input
           type="submit"
           value="Add meal"
-          onClick={() =>
-            setValue("action","addMeal")
-          }
+          onClick={() => setValue("action", "addMeal")}
           className="btn btn-block text-white bg-gray-700"
         />
         <input
           type="submit"
           value="Add to upcoming"
-          onClick={() =>
-            setValue("action", "addToUpcoming")
-          }
+          onClick={() => setValue("action", "addToUpcoming")}
           className="btn btn-block text-white bg-gray-700"
         />
       </form>

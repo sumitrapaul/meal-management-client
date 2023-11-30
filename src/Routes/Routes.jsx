@@ -17,6 +17,8 @@ import ServeMeals from "../pages/Dashboard/ServeMeals/ServeMeals";
 import Meals from "../pages/Meals/Meals";
 import MealDetails from "../pages/Home/MealDetails/MealDetails";
 import UpcomingMeals from "../pages/Dashboard/UpcomingMeals/UpcomingMeals";
+import AdminRoutes from "./AdminRoutes";
+import UpdateMeals from "../pages/Dashboard/UpdateMeals/UpdateMeals";
 // import AdminRoutes from "./AdminRoutes";
 // import AdminRoutes from "./AdminRoutes";
 
@@ -71,15 +73,20 @@ export const router = createBrowserRouter([
         },
         {
           path:'users',
-          element:<ManageUsers></ManageUsers>
+          element:<AdminRoutes><ManageUsers></ManageUsers></AdminRoutes>
         },
         {
           path:'addMeal',
-          element:<AddMeal></AddMeal>
+          element:<AdminRoutes><AddMeal></AddMeal></AdminRoutes>
         },
         {
           path:'allMeals',
-          element:<AllMeals></AllMeals>
+          element:<AdminRoutes><AllMeals></AllMeals></AdminRoutes>
+        },
+        {
+          path:'updateMeals/:id',
+          element:<AdminRoutes><UpdateMeals></UpdateMeals></AdminRoutes>,
+          loader:({params}) => fetch (`http://localhost:5000/allMeals/${params.id}`)
         },
         {
           path:'allReviews',
