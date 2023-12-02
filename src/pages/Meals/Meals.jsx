@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const Meals = () => {
 
     const [ meal ] = useMeals()
+    console.log(meal)
     const [search, setSearch] = useState("")
     const [filterMeals, setFilterMeals] = useState(meal)
    

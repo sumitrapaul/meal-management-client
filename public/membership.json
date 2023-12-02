@@ -1,0 +1,17 @@
+[
+    {
+        "image":"https://i.ibb.co/5jGjCbg/image.png",
+        "package_name":"Silver",
+        "price":70
+    },
+    {
+        "image":"https://i.ibb.co/XZCqP4Z/image.png",
+        "package_name":"Gold",
+        "price":120
+    },
+    {
+        "image":"https://i.ibb.co/cYqdLJK/image.png",
+        "package_name":"Platinum",
+        "price":150
+    }
+]

@@ -26,8 +26,7 @@ const Login = () => {
       console.log(email, password);
 
       signIn(email, password);
-      // const user = res.user;
-      // console.log(user);
+    
       reset();
       Swal.fire({
         title: "User login successfully!!",
@@ -62,13 +61,14 @@ const Login = () => {
   return (
     <>
       <Helmet><title>Hostel Management | Login</title></Helmet>
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-          </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+      <div className="hero min-h-screen">
+        <div className="hero-content flex-col">
+          
+          <div className="card shrink-0 shadow-2xl bg-base-100">
+            <form onSubmit={handleSubmit(onSubmit)} className="card-body w-full">
+          
+            <h1 className="text-2xl font-bold mb-4">Login now!</h1>
+          
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -118,10 +118,10 @@ const Login = () => {
               <small>
                 New here? Please{" "}
                 <Link
-                  className="text-blue-700 text-2xl font-bold"
+                  className="text-blue-700 text-xl font-bold"
                   to="/register"
                 >
-                  Create an account
+                  SignUp
                 </Link>
               </small>
             </p>

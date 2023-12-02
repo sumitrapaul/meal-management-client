@@ -19,6 +19,7 @@ const Register = () => {
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic()
 
+  // const path ="https://i.ibb.co/tzWy0kL/image.png"
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((res) => {
       const loggedUser = res.user;
@@ -30,7 +31,9 @@ const Register = () => {
             name: data.name,
             email: data.email,
             photoURL: data.photoURL,
+            badge: "Bronze"
           }
+          console.log(userInfo)
           axiosPublic.post('/users', userInfo)
          .then(res =>{
           if(res.data.insertedId){
@@ -63,13 +66,11 @@ const Register = () => {
       <Helmet>
         <title>Hostel Management | Register</title>
       </Helmet>
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Register now!</h1>
-          </div>
+      <div className="hero min-h-screen">
+        <div className="hero-content flex-col">
           <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+            <h1 className="text-3xl font-bold mb-4">Register now!</h1>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
@@ -152,7 +153,7 @@ const Register = () => {
             </form>
             <p className="text-center">
               <small>
-                Already have an account? Please{" "}
+                Have an account? Please{" "}
                 <Link className="text-blue-700 text-2xl font-bold" to="/login">
                   Login
                 </Link>

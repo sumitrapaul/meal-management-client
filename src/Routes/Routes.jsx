@@ -19,6 +19,7 @@ import MealDetails from "../pages/Home/MealDetails/MealDetails";
 import UpcomingMeals from "../pages/Dashboard/UpcomingMeals/UpcomingMeals";
 import AdminRoutes from "./AdminRoutes";
 import UpdateMeals from "../pages/Dashboard/UpdateMeals/UpdateMeals";
+import Checkout from "../pages/Checkout/Checkout";
 // import AdminRoutes from "./AdminRoutes";
 // import AdminRoutes from "./AdminRoutes";
 
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
         {
             path:'/m/:_id',
             element:<MealDetails></MealDetails>,
-            loader:({params}) => `http://localhost:5000/mealDeatils/${params._id}`
+            loader:({params}) => `https://hostel-management-server-bay.vercel.app/mealDeatils/${params._id}`
         },
         {
           path:'/login',
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
         {
           path:'/meals',
           element:<Meals></Meals>
+        },
+        {
+          path:'/checkout/:package_name',
+          element:<Checkout></Checkout>
         }
       ]
     },
@@ -86,7 +91,7 @@ export const router = createBrowserRouter([
         {
           path:'updateMeals/:id',
           element:<AdminRoutes><UpdateMeals></UpdateMeals></AdminRoutes>,
-          loader:({params}) => fetch (`http://localhost:5000/allMeals/${params.id}`)
+          loader:({params}) => fetch (`https://hostel-management-server-bay.vercel.app/allMeals/${params.id}`)
         },
         {
           path:'allReviews',
