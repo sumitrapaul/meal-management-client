@@ -7,10 +7,11 @@ const Membership = () => {
   const [membership, setMembership] = useState([])
 
   useEffect(() =>{
-    fetch('/membership.json')
+    fetch('http://localhost:5000/members')
     .then(res => res.json())
     .then(data => {
       setMembership(data)
+      console.log(data)
     })
   },[])
   return (

@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
         {
             path:'/m/:_id',
             element:<MealDetails></MealDetails>,
-            loader:({params}) => `https://hostel-management-server-bay.vercel.app/mealDeatils/${params._id}`
+            loader:({params}) => `http://localhost:5000/mealDeatils/${params._id}`
         },
         {
           path:'/login',
@@ -91,7 +91,7 @@ export const router = createBrowserRouter([
         {
           path:'updateMeals/:id',
           element:<AdminRoutes><UpdateMeals></UpdateMeals></AdminRoutes>,
-          loader:({params}) => fetch (`https://hostel-management-server-bay.vercel.app/allMeals/${params.id}`)
+          loader:({params}) => fetch (`http://localhost:5000/allMeals/${params.id}`)
         },
         {
           path:'allReviews',
