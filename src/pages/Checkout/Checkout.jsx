@@ -1,22 +1,41 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
-// import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useMembership from "../../hooks/useMembership";
-// import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate, useParams } from "react-router-dom";
+import useMember from "../../hooks/useMember";
+import PaymentSuccessful from "./PaymentSuccessful";
 
-
-// const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK)
 const Checkout = () => {
     const stripe = useStripe();
     const elements = useElements()
+    const { user } = useAuth()
+    const navigate = useNavigate()
     const [error, setError] = useState('')
+    const [transactionId, setTransactionId] = useState('')
     const [clientSecret, setClientSecret] = useState('')
-    // const axiosPublic = useAxiosPublic()
-    const [member] = useMembership()
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const id = useParams()
+    // console.log(id)
+    const [member, ,refetch] = useMember()
     const axiosSecure = useAxiosSecure()
-    const totalPrice =member.reduce((total, mem) => total + mem.price, 0)      
+    const PackageName =member.find((mem) => mem.package_name == id.package_name)  
+    // console.log(PackageName)
+    const totalPrice = PackageName?.price || 0
+    // console.log(totalPrice) 
+    
+    const handleClose = () =>{
+        setIsModalOpen(false)
+        refetch()
+        navigate('/')
+    }
+
+   useEffect(() =>{
+    if(transactionId){
+        setIsModalOpen(true)
+    }
+   },[transactionId])
     useEffect(() =>{
           if(totalPrice > 0){
             axiosSecure.post('/create-payment-intent', { price: totalPrice })
@@ -54,6 +73,38 @@ const Checkout = () => {
             setError('')
         }
 
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                     email: user?.email || 'anonymous',
+                     name:  user?.name || 'anonymous',
+                }
+            }
+        })
+
+        if(confirmError){
+            console.log('confirm error')
+        }
+        else{
+            // console.log('payment intent', paymentIntent)
+            if(paymentIntent.status === 'succeeded'){
+                console.log('transiction', paymentIntent.id)
+                setTransactionId(paymentIntent.id)
+
+                    const payment = {
+                    email: user.email,
+                    price: totalPrice,
+                    transactionId: paymentIntent.id,
+                    memberShip: member.find(mem => mem.package_name)
+                 }
+                 const res =await axiosSecure.post('/payments', payment)
+                 
+                 console.log(res.data)
+               
+            }
+        }
+
     }
     return (
         <div>
@@ -78,22 +129,13 @@ const Checkout = () => {
             </CardElement>
             <button className="btn btn-primary my-4 btn-sm" type="submit" disabled={!stripe || !clientSecret}>Pay</button>
             <p className="text-red-600">{error}</p>
+            {transactionId && <p className="text-blue-700">TransactionId: {transactionId}</p>}
             </form> 
-            
+            <PaymentSuccessful isOpen={isModalOpen} onClose={handleClose} transactionId={transactionId}></PaymentSuccessful>
         
         </div>
     );
 };
 
-
-// const Payment = () => {
-//     return (
-//         <div>
-//            <Elements stripe={stripePromise}>
-//                  <Checkout/>
-//            </Elements>
-//         </div>
-//     );
-// };
 
 export default Checkout;

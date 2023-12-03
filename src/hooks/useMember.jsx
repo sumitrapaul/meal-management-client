@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
 
 
-const useMembership = () => {
+const useMember = () => {
     const axiosPublic = useAxiosPublic()
     const {data: member = [], isPending: loading, refetch} = useQuery({
         queryKey: ['member'],
@@ -14,4 +14,4 @@ const useMembership = () => {
     return [member, loading, refetch]
 };
 
-export default useMembership;
+export default useMember;
