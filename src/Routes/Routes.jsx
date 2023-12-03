@@ -19,7 +19,7 @@ import MealDetails from "../pages/Home/MealDetails/MealDetails";
 import UpcomingMeals from "../pages/Dashboard/UpcomingMeals/UpcomingMeals";
 import AdminRoutes from "./AdminRoutes";
 import UpdateMeals from "../pages/Dashboard/UpdateMeals/UpdateMeals";
-import Checkout from "../pages/Checkout/Checkout";
+import Payment from "../pages/Checkout/Payment";
 // import AdminRoutes from "./AdminRoutes";
 // import AdminRoutes from "./AdminRoutes";
 
@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
         },
         {
           path:'/checkout/:package_name',
-          element:<Checkout></Checkout>
+          element:<Payment></Payment>
         }
       ]
     },
