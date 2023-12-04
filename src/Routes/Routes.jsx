@@ -20,13 +20,14 @@ import UpcomingMeals from "../pages/Dashboard/UpcomingMeals/UpcomingMeals";
 import AdminRoutes from "./AdminRoutes";
 import UpdateMeals from "../pages/Dashboard/UpdateMeals/UpdateMeals";
 import Payment from "../pages/Checkout/Payment";
-// import AdminRoutes from "./AdminRoutes";
-// import AdminRoutes from "./AdminRoutes";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import UpComing from "../pages/UpComing/UpComing";
 
 export const router = createBrowserRouter([
     {
       path: "/",
       element: <Main></Main>,
+      errorElement:<ErrorPage></ErrorPage>,
       children:[
         {
             path:'/',
@@ -50,8 +51,12 @@ export const router = createBrowserRouter([
           element:<Meals></Meals>
         },
         {
+          path:'/upcoming',
+          element:<PrivateRoute><UpComing></UpComing></PrivateRoute>
+        },
+        {
           path:'/checkout/:package_name',
-          element:<Payment></Payment>
+          element:<PrivateRoute><Payment></Payment></PrivateRoute>
         }
       ]
     },
@@ -61,15 +66,15 @@ export const router = createBrowserRouter([
       children:[
         {
           path:'profile',
-          element:<Profile></Profile>
+          element:<PrivateRoute><Profile></Profile></PrivateRoute>
         },
         {
           path:'requestedMeals',
-          element:<RequestedMeal></RequestedMeal>
+          element:<PrivateRoute><RequestedMeal></RequestedMeal></PrivateRoute>
         },
         {
           path:'reviews',
-          element:<Reviews></Reviews>
+          element:<PrivateRoute><Reviews></Reviews></PrivateRoute>
         },
         /**admin route */
         {
@@ -95,15 +100,15 @@ export const router = createBrowserRouter([
         },
         {
           path:'allReviews',
-          element:<AllReviews></AllReviews>
+          element:<AdminRoutes><AllReviews></AllReviews></AdminRoutes>
         },
         {
           path:'serveMeals',
-          element:<ServeMeals></ServeMeals>
+          element:<AdminRoutes><ServeMeals></ServeMeals></AdminRoutes>
         },
         {
           path:'addToUpcoming',
-          element:<UpcomingMeals></UpcomingMeals>
+          element:<AdminRoutes><UpcomingMeals></UpcomingMeals></AdminRoutes>
         },
       ]
     }

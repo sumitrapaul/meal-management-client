@@ -19,9 +19,7 @@ const UpcomingMeals = () => {
               <th>Reviews Count</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Update</th>
-              <th>Delete</th>
-              <th>Details</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -32,9 +30,7 @@ const UpcomingMeals = () => {
                     <td>{item.reviews}</td>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
-                    <td><button className="btn bg-red-200">Update</button></td>
-                    <td><button className="btn bg-red-200">Delete</button></td>
-                    <td><button className="btn bg-red-200">View Meal</button></td>
+                    <td><button className="btn bg-red-200">Publish</button></td>
                    
                   </tr>)
             }

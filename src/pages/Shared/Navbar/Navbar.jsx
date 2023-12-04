@@ -3,9 +3,12 @@ import { AuthContext } from "../../../Provider/AuthProvider";
 import { Link } from "react-router-dom";
 
 import { IoMdNotificationsOutline } from "react-icons/io";
+import useUpcoming from "../../../hooks/useUpcoming";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [ upComingMeal ] = useUpcoming()
+
   const [showProfileDropDown, setShowProfileDropDown] = useState(false)
   const handleLogout = () => {
     logOut()
@@ -32,10 +35,11 @@ const closeProfile = () => {
         <Link className="text-xl" to="/meals">Meals</Link>
       </li>
       <li>
-        <Link className="text-xl" to="/">
+        <Link className="text-xl" to="/upcoming">
           <div className="flex">
             Upcoming
             <IoMdNotificationsOutline className="text-2xl"></IoMdNotificationsOutline>
+            <div className="badge badge-secondary">+{upComingMeal.length}</div>
           </div>
         </Link>
       </li>

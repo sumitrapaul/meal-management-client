@@ -9,15 +9,16 @@ const Membership = () => {
   const [member] = useMember()
 
   return (
+    
     <div className="mt-12">
       <h3 className="text-4xl text-center font-bold mb-12">
         Membership<span className="text-red-700"> section</span>
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {member.map((mem) => (
-          
+          <Link  key={mem.id} to={`/checkout/${mem.package_name}`}>
           <div
-            key={mem.id}
+           
             className="card card-compact w-96 bg-base-100 shadow-xl"
           >
             <figure>
@@ -25,15 +26,16 @@ const Membership = () => {
             </figure>
             <div className="card-body items-center">
               
-                <Link to={`/checkout/${mem.package_name}`}><h2 className="card-title">Name: {mem.package_name}</h2></Link>
+              <h2 className="card-title">Name: {mem.package_name}</h2>
             
               <p>Price: {mem.price}</p>
             </div>
           </div>
-         
+          </Link>
         ))}
       </div>
     </div>
+    
   );
 };
 

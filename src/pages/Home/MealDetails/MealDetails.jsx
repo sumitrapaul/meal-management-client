@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { useContext } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import useMeals from "../../../hooks/useMeals";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useParams } from "react-router-dom";
 
 
 const MealDetails = () => {
@@ -11,12 +12,28 @@ const MealDetails = () => {
     const { _id } =useParams()
 
     const [mealDetails, mealLoading] = useMeals()
-
+    const [like, setLike] = useState(false)
+    const axiosSecure = useAxiosSecure()
     const selectedMeal = mealDetails.find((meal) => meal._id === _id)
     if(!selectedMeal){
         return <div>loading...</div>
     }
-     const { image, name, description, ingredients, rating, likes, reviews, date} = selectedMeal
+     const { image, name, title, description, ingredients, rating, likes, reviews, date} = selectedMeal
+
+     const handleRequested =async () =>{
+            const request = {
+              mealTitle: title,
+              mealId:_id,
+              email: user.email,
+              displayName: user.displayName,
+              likes: 0,
+              reviews: 0,
+              status: 'pending'
+            }
+
+            const res = await axiosSecure.post('/requests', request)
+            console.log(res.data)
+     }
     return (
         <div>
           <Helmet><title>Hostel Management | Meal Details</title></Helmet>
@@ -37,7 +54,7 @@ const MealDetails = () => {
         <div className="card-actions flex gap-5 mt-4">
        
       <button className="btn bg-red-200">Like</button>
-      <button className="btn bg-red-200">Meal Request</button>
+      <button onClick={() => handleRequested(_id)} className="btn bg-red-200">Meal Request</button>
      
           
         </div>

@@ -17,12 +17,12 @@ const Checkout = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const id = useParams()
-    // console.log(id)
+    // console.log(id._id)
     const [member, ,refetch] = useMember()
     const axiosSecure = useAxiosSecure()
-    const PackageName =member.find((mem) => mem.package_name == id.package_name)  
-    // console.log(PackageName)
-    const totalPrice = PackageName?.price || 0
+    const packageName =member.find((mem) => mem.package_name == id.package_name)  
+    console.log(packageName)
+    const totalPrice = packageName?.price || 0
     // console.log(totalPrice) 
     
     const handleClose = () =>{
@@ -30,6 +30,8 @@ const Checkout = () => {
         refetch()
         navigate('/')
     }
+
+    // const [] = useUsers();
 
    useEffect(() =>{
     if(transactionId){
@@ -96,16 +98,32 @@ const Checkout = () => {
                     email: user.email,
                     price: totalPrice,
                     transactionId: paymentIntent.id,
-                    memberShip: member.find(mem => mem.package_name)
+                    memberShipId: packageName.id,
+                    membershipName: packageName.package_name,
+                    memberShipprice: packageName.price
+                   
                  }
-                 const res =await axiosSecure.post('/payments', payment)
+
                  
+                 const paymentBadge = {
+                  
+                    membershipName: packageName.package_name
+                   
+                   
+                 }
+
+                 console.log(payment)
+                 const res =await axiosSecure.post('/payments', payment)
                  console.log(res.data)
+                 const res1 = await axiosSecure.patch(`/updateBadge/${user.email}`, paymentBadge)
+                 console.log(res1.data)
                
             }
         }
 
     }
+
+
     return (
         <div>
           

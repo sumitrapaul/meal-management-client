@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useUsers from "../../../hooks/useUsers";
 
+
 const Profile = () => {
  
   const [users, refetch] = useUsers([]);
@@ -23,8 +24,9 @@ const Profile = () => {
             <h2 className="card-title">{user.name}</h2>
             <p>{user.email}</p>
             <p className="badge badge-primary badge-outline">{user?.badge}</p>
-            <p className="badge badge-primary badge-outline"></p>
+            
           </div>
+          
         </div>
       ))}
     </div>
