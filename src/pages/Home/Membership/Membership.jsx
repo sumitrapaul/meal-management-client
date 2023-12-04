@@ -19,10 +19,10 @@ const Membership = () => {
           <Link  key={mem.id} to={`/checkout/${mem.package_name}`}>
           <div
            
-            className="card card-compact w-96 bg-base-100 shadow-xl"
+            className="card card-compact bg-base-100 shadow-xl"
           >
             <figure>
-              <img src={mem.image} alt="Shoes" />
+              <img className="h-96" src={mem.image} alt="Shoes" />
             </figure>
             <div className="card-body items-center">
               
