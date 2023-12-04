@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
         },
         {
           path:'/upcoming',
-          element:<PrivateRoute><UpComing></UpComing></PrivateRoute>
+          element:<UpComing></UpComing>
         },
         {
           path:'/checkout/:package_name',

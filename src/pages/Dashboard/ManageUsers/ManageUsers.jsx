@@ -87,7 +87,7 @@ const ManageUsers = () => {
                     user.role === 'admin' ? 'Admin' : <button onClick={() => handleMakeAdmin(user)} className="btn bg-red-200">Make Admin</button>
                 }
             </td>
-            <td>Subscribe</td>
+            <td>{user.badge}</td>
             <td><button onClick={() => handleDeleteUser(user)} className="btn bg-red-200">Delete</button></td>
           </tr>)
      }

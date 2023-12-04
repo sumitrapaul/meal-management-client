@@ -8,7 +8,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const ServeMeals = () => {
     const { user } = useAuth()
     console.log(user)
-    const [mealRequest] = useRequest()
+    const [mealRequest, ,refetch] = useRequest()
     console.log(mealRequest)
     const axiosSecure= useAxiosSecure()
 
@@ -22,17 +22,18 @@ const ServeMeals = () => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, served!"
       }).then((result) => {
-        if (result.isConfirmed) {
+        if(result.isConfirmed) {
           axiosSecure.patch(`/requests/serve/${id}`)
           .then(res =>{
           if(res.data.modifiedCount > 0){
+            refetch()
             Swal.fire({
               title: "Delivered!",
               text: "Meal has been delivered.",
               icon: "success"
             });
           }
-          else if(res.data.matchCount > 0){
+          else{
             Swal.fire({
               title: "Already delivered!",
               icon: "success"
@@ -41,6 +42,7 @@ const ServeMeals = () => {
           
          
         })
+        
       }
       });
     }

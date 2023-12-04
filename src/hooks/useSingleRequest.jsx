@@ -6,12 +6,12 @@ import useAuth from "./useAuth";
 
 const useSingleRequest = () => {
     const { user } = useAuth()
-    console.log(user)
+    console.log(user.email)
     const axiosSecure = useAxiosSecure()
     const {data: mealRequest = [], isPending: loading, refetch} = useQuery({
         queryKey: ['mealRequest', user?.email],
         queryFn: async() =>{
-             const res = await axiosSecure.get(`/requests/${user?.email}`)
+             const res = await axiosSecure.get(`/requests1/${user.email}`)
              return res.data
         }
     })

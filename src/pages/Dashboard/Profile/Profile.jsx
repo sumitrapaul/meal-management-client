@@ -9,7 +9,7 @@ import useUsers from "../../../hooks/useUsers";
 const Profile = () => {
  
   const [users, refetch] = useUsers([]);
-  console.log(users);
+  
   
   return (
     <div className="flex justify-center">

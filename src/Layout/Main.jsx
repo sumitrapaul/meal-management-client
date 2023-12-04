@@ -8,7 +8,7 @@ const Main = () => {
     const navFoot = location.pathname.includes('login') || location.pathname.includes('register')
 
     return (
-        <div>
+        <div className="overflow-x-hidden">
             {navFoot ||<Navbar/>}
             <Outlet/>
             {navFoot || <Footer/>} 

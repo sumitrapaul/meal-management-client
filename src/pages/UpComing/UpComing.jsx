@@ -1,12 +1,36 @@
+import Swal from "sweetalert2";
 import useUpcoming from "../../hooks/useUpcoming";
-
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const UpComing = () => {
-    const [upComingMeal] = useUpcoming()
+  const [upComingMeal, , refetch] = useUpcoming();
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-    return (
-        <div className="mt-12">
-            
+  
+  const handleLike = async (id) => {
+
+    if(user?.email)
+    {
+      axiosSecure.patch(`/upcoming/${id}`).then((res) => {
+        if (res.data.modifiedCount > 0) {
+          refetch();
+          Swal.fire({
+            title: "Success!",
+          });
+        }
+      });
+    }
+    else{
+      navigate('/login')
+    }
+  };
+
+  return (
+    <div className="mt-12">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {upComingMeal.map((item) => (
           <div key={item._id} className="card w-96 bg-base-100 shadow-xl">
@@ -20,14 +44,22 @@ const UpComing = () => {
                   Price: {item.price}
                 </div>
               </h2>
-              <p>Category: {item.category}</p>
-              <button className="btn bg-red-200">Like</button>
+              <div className="flex ">
+                <p>Category: {item.category}</p>
+                <p>Likes: {item.likes}</p>
+              </div>
+              <button
+                onClick={() => handleLike(item?._id)}
+                className="btn bg-red-200"
+              >
+                Like
+              </button>
             </div>
           </div>
         ))}
       </div>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default UpComing;

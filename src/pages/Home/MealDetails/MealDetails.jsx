@@ -4,12 +4,16 @@ import { AuthContext } from "../../../Provider/AuthProvider";
 import useMeals from "../../../hooks/useMeals";
 import { Helmet } from "react-helmet-async";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useUsers from "../../../hooks/useUsers";
+import Swal from "sweetalert2";
 
 
 const MealDetails = () => {
     const {user, loading} = useContext(AuthContext)
     const { _id } =useParams()
+    const [users, refetch] = useUsers([]);
+   const navigate = useNavigate()
 
     const [mealDetails, mealLoading] = useMeals()
     const [like, setLike] = useState(false)
@@ -21,19 +25,62 @@ const MealDetails = () => {
      const { image, name, title, description, ingredients, rating, likes, reviews, date} = selectedMeal
 
      const handleRequested =async () =>{
-            const request = {
-              mealTitle: title,
-              mealId:_id,
-              email: user.email,
-              displayName: user.displayName,
-              likes: 0,
-              reviews: 0,
-              status: 'pending'
-            }
 
-            const res = await axiosSecure.post('/requests', request)
-            console.log(res.data)
+  
+      if(users[0].badge !== "Bronze")
+      {
+        const request = {
+          mealTitle: title,
+          mealId:_id,
+          email: user.email,
+          displayName: user.displayName,
+          likes: likes,
+          reviews: reviews,
+          status: 'pending'
+        }
+
+        const res = await axiosSecure.post('/requests', request)
+        console.log(res.data)
+        if(res.data.insertedId){
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title:  'Meal requested successfully!!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+      else
+      {
+        Swal.fire({
+          position: "top-end",
+          icon: "warning",
+          title: 'Need premium package for request meal!!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
      }
+
+     const handleLike = async (id) => {
+           
+      if(user?.email)
+      {
+        axiosSecure.patch(`/meals/${id}`).then((res) => {
+          if (res.data.modifiedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Success!",
+            });
+          }
+        });
+      }
+      else{
+        navigate('/login')
+      }
+    };
+
     return (
         <div>
           <Helmet><title>Hostel Management | Meal Details</title></Helmet>
@@ -53,11 +100,9 @@ const MealDetails = () => {
         <p><span className="text-xl font-bold">Description:</span> {description}</p>
         <div className="card-actions flex gap-5 mt-4">
        
-      <button className="btn bg-red-200">Like</button>
+      <button onClick={() => handleLike(_id)} className="btn bg-red-200">Like</button>
       <button onClick={() => handleRequested(_id)} className="btn bg-red-200">Meal Request</button>
-     
-          
-        </div>
+      </div>
       </div>
     </div>
         </div>  
