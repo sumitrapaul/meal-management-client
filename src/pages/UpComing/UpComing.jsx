@@ -3,6 +3,7 @@ import useUpcoming from "../../hooks/useUpcoming";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const UpComing = () => {
   const [upComingMeal, , refetch] = useUpcoming();
@@ -31,6 +32,7 @@ const UpComing = () => {
 
   return (
     <div className="mt-12">
+      <Helmet><title>Hostel Management | Upcoming</title></Helmet>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {upComingMeal.map((item) => (
           <div key={item._id} className="card w-96 bg-base-100 shadow-xl">

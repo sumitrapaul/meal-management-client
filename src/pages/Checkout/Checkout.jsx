@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
 import useMember from "../../hooks/useMember";
 import PaymentSuccessful from "./PaymentSuccessful";
+import { Helmet } from "react-helmet-async";
 
 const Checkout = () => {
   const stripe = useStripe();
@@ -121,6 +122,7 @@ const Checkout = () => {
 
   return (
     <div>
+      <Helmet><title>Hostel Management | Checkout</title></Helmet>
       <form onSubmit={handleSubmit}>
         <h3 className="text-4xl text-center font-bold mb-12 mt-12">
           Check<span className="text-red-700"> out</span>

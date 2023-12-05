@@ -4,6 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useUsers from "../../../hooks/useUsers";
+import { Helmet } from "react-helmet-async";
 
 
 const Profile = () => {
@@ -13,6 +14,7 @@ const Profile = () => {
   
   return (
     <div className="flex justify-center">
+      <Helmet><title>Hostel Management | My Profile</title></Helmet>
       {users.map((user) => (
         <div key={user._id} className="card w-96 bg-gray-300 shadow-xl mt-16">
           <div className="avatar flex justify-center items-center mt-8">

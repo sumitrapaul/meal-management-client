@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import useAuth from "../../../hooks/useAuth";
 import useMeals from "../../../hooks/useMeals";
 
@@ -7,6 +8,7 @@ const AdminProfile = () => {
     const [meal] = useMeals()
     return (
         <div>
+          <Helmet><title>Hostel Management | Admin Profile</title></Helmet>
             <div className="flex justify-center items-center">
             {
                 user && (

@@ -1,8 +1,13 @@
-# React + Vite
+# MealMate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Website deploy link [here](https://meal-system-9ad47.web.app/)
 
-Currently, two official plugins are available:
+# Project Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* When the user visits my website, he will see a navbar,banner,some category meal,membership package(silver, gold and platinum) and gallery,footer.
+
+* When the user clicks on the details button, he will see the details of the match.And it will ask to log in if not logged in.He can request for likes and mathches from the details page when he takes the membership packhage.Modal will show after paying the membership package.
+
+* He clicks on his profile and goes to the dashboard to see his profile,see his requested matches and can cancel.
+
+* Admin can see his profile, meal add, upcoming meall add,meal publish, all users from the dashboard by logging in.He can delete any user and make him an admin.Which other users's can't.

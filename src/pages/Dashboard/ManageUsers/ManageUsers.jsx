@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 
 const ManageUsers = () => {
@@ -63,6 +64,7 @@ const ManageUsers = () => {
     }
     return (
         <div>
+          <Helmet><title>Hostel Management | Manage Users</title></Helmet>
            <div className="overflow-x-auto">
   <table className="table">
    
