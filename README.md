@@ -11,3 +11,7 @@ Website deploy link [here](https://meal-system-9ad47.web.app/)
 * He clicks on his profile and goes to the dashboard to see his profile,see his requested matches and can cancel.
 
 * Admin can see his profile, meal add, upcoming meall add,meal publish, all users from the dashboard by logging in.He can delete any user and make him an admin.Which other users's can't.
+
+# Technology
+
+* React Js , Node Js, MongoDB, Express Js, Firebase, Tailwind
